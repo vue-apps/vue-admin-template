@@ -95,7 +95,7 @@
       >.menu-wrapper > .el-submenu.is-active >div{
         border-left: 3px solid $headBg;
       }
-      >.menu-wrapper > .el-submenu.is-active >ul{
+      >.menu-wrapper > .el-submenu.is-opened >ul{
         border-bottom: 1px solid $headBg;
       }
     }
