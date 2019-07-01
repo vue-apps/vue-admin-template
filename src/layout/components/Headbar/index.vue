@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showLogo" :class="{'has-logo':showLogo}">
+  <div>
     <logo :collapse="isCollapse" />
     <navtip />
   </div>
@@ -17,6 +17,9 @@ export default {
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo
+    },
+    isCollapse() {
+      return true
     }
   }
 }

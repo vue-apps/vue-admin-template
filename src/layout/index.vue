@@ -1,6 +1,6 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <headbar />
+    <headbar class="headbar-container" />
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div class="main-container">
@@ -40,8 +40,12 @@ export default {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        mobile: this.device === 'mobile',
+        hasHeader: this.$store.state.settings.sidebarLogo
       }
+    },
+    showLogo() {
+      return this.$store.state.settings.sidebarLogo
     }
   },
   methods: {

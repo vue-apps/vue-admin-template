@@ -1,11 +1,11 @@
 <template>
-  <div class="navtip">
+  <div class="navtip-container">
     <hamburger class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-
+          erer
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -33,9 +33,7 @@
 import Hamburger from '@/components/Hamburger'
 
 export default {
-  components: {
-    Hamburger
-  },
+  components: { Hamburger },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
@@ -49,16 +47,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.navtip {
-  height: 50px;
-  overflow: hidden;
+.navtip-container {
   position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  overflow: hidden;
 
   .hamburger-container {
-    line-height: 46px;
     height: 100%;
+    overflow: hidden;
     float: left;
     cursor: pointer;
     transition: background .3s;
@@ -72,12 +67,14 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 50px;
+    padding-right: 15px;
 
     &:focus {
       outline: none;
     }
-
+    .el-dropdown{
+      color: #fff;
+    }
     .right-menu-item {
       display: inline-block;
       padding: 0 8px;
