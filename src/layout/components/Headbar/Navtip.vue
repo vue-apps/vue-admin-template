@@ -6,8 +6,7 @@
       <el-dropdown class="right-menu-item avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <i class="el-icon-user-solid" />
-          {{ username }}
-          <i class="el-icon-caret-bottom" />
+          <span v-if="device!=='mobile'">{{ username }}<i class="el-icon-caret-bottom" /></span>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown last-dropdown">
           <el-dropdown-item>
@@ -22,8 +21,7 @@
       <el-dropdown class="right-menu-item avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <i class="el-icon-coin" />
-          Wallet
-          <i class="el-icon-caret-bottom" />
+          <span v-if="device!=='mobile'">Wallet<i class="el-icon-caret-bottom" /></span>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <el-dropdown-item>
@@ -40,7 +38,7 @@
         <div class="avatar-wrapper">
           <router-link to="/">
             <i class="el-icon-news" />
-            News
+            <span v-if="device!=='mobile'">News</span>
           </router-link>
         </div>
       </div>
@@ -56,6 +54,9 @@ export default {
   computed: {
     username() {
       return this.$store.getters.name
+    },
+    device() {
+      return this.$store.state.app.device
     }
   },
   methods: {
