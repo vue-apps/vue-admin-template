@@ -78,7 +78,7 @@ export default {
 
   .fixed-header {
     position: fixed;
-    top: 0;
+    top: $headbarHeight;
     right: 0;
     z-index: 9;
     width: calc(100% - #{$sideBarWidth});
@@ -91,5 +91,6 @@ export default {
 
   .mobile .fixed-header {
     width: 100%;
+    top: $headbarMobile;
   }
 </style>
