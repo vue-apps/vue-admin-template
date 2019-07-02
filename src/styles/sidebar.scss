@@ -15,6 +15,8 @@
       width: $sideBarWidth;
       height: $headbarHeight;
       line-height: $headbarHeight;
+      padding-left: 15px;
+      padding-right: 15px;
     }
 
     .navtip-container{
@@ -73,9 +75,13 @@
       width: 100%;
       overflow: hidden;
     }
-
     .svg-icon {
       margin-right: 16px;
+    }
+    .el-submenu__title i{
+       color: #fff;
+       font-weight: 700;
+       transform:rotate(90deg);
     }
 
     .el-scrollbar__view>.el-menu {
@@ -95,9 +101,29 @@
       >.menu-wrapper > .el-submenu.is-active >div{
         border-left: 3px solid $headBg;
       }
+      >.menu-wrapper > .el-submenu.is-opened >div{
+        >i {
+          color: $headBg;
+          font-weight: 700;
+          transform:rotate(0deg);
+        }
+      }
       >.menu-wrapper > .el-submenu.is-opened >ul{
         border-bottom: 1px solid $headBg;
       }
+    }
+
+    // Netsun
+    .el-menu-item{
+      font-size: 16px;
+    }
+    .el-submenu > .el-submenu__title{
+      height: 47px;
+      line-height: 47px;
+    }
+    .el-submenu > .el-menu .el-menu-item{
+      height: 42px;
+      line-height: 42px;
     }
 
     // menu hover
@@ -191,6 +217,7 @@
         float: inherit;
         line-height: 60px;
         border-bottom: 1px solid #fff;
+        text-align: center;
       }
 
       .navtip-container{

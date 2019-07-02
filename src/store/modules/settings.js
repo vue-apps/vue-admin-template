@@ -1,8 +1,11 @@
 import defaultSettings from '@/settings'
 
-const { showSettings, fixedHeader, sidebarLogo } = defaultSettings
+const { siteName, siteTitle, siteLogo, showSettings, fixedHeader, sidebarLogo } = defaultSettings
 
 const state = {
+  siteName: siteName,
+  siteTitle: siteTitle,
+  siteLogo: siteLogo,
   showSettings: showSettings,
   fixedHeader: fixedHeader,
   sidebarLogo: sidebarLogo
