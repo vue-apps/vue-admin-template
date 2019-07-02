@@ -124,7 +124,6 @@ export default {
   border:2px solid $headBg;
   border-radius:0;
   min-width:200px;
-  margin-right:-60px;
 }
 .last-dropdown{
   right:0;
