@@ -29,19 +29,6 @@ export default {
   background: #fff;
   box-shadow: 0 1px 7px 0 rgba(12, 51, 92, 0.2);
 
-  .hamburger-container {
-    line-height: 46px;
-    height: 100%;
-    float: left;
-    cursor: pointer;
-    transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
-
-    &:hover {
-      background: rgba(0, 0, 0, .025)
-    }
-  }
-
   .breadcrumb-container {
     float: left;
   }
