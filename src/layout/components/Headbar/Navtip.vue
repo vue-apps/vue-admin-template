@@ -3,28 +3,44 @@
     <hamburger class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
+      <el-dropdown class="right-menu-item avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          erer
+          <i class="el-icon-user-solid" />
+          {{ username }}
           <i class="el-icon-caret-bottom" />
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
+        <el-dropdown-menu slot="dropdown" class="user-dropdown last-dropdown">
+          <el-dropdown-item>
+            <router-link to="/">Home</router-link>
+          </el-dropdown-item>
           <el-dropdown-item divided>
             <div @click="logout">Log Out</div>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+
+      <el-dropdown class="right-menu-item avatar-container" trigger="click">
+        <div class="avatar-wrapper">
+          <i class="el-icon-coin" />
+          钱包
+          <i class="el-icon-caret-bottom" />
+        </div>
+        <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          <el-dropdown-item>
+            <router-link to="/">Home</router-link>
+          </el-dropdown-item>
+          <el-dropdown-item divided>Home</el-dropdown-item>
+          <el-dropdown-item divided>
+            <div @click="logout">Log Out</div>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
+      <div class="right-menu-item">
+        <div class="avatar-wrapper">
+          <router-link to="/"><i class="el-icon-news" /></router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +50,11 @@ import Hamburger from '@/components/Hamburger'
 
 export default {
   components: { Hamburger },
+  computed: {
+    username() {
+      return this.$store.getters.name
+    }
+  },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
@@ -47,6 +68,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/styles/variables.scss";
+
 .navtip-container {
   position: relative;
   overflow: hidden;
@@ -60,14 +83,13 @@ export default {
     -webkit-tap-highlight-color:transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, .25)
     }
   }
 
   .right-menu {
     float: right;
     height: 100%;
-
     &:focus {
       outline: none;
     }
@@ -75,23 +97,35 @@ export default {
       color: #fff;
     }
     .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
+      float: right;
       height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
       vertical-align: text-bottom;
+      border-left:1px solid rgba(255, 255, 255, .15);
+    }
 
-      &.hover-effect {
-        cursor: pointer;
-        transition: background .3s;
-
-        &:hover {
-          background: rgba(0, 0, 0, .025)
-        }
-      }
+    .avatar-wrapper{
+      padding-left:15px;
+      padding-right:15px;
+    }
+    .avatar-wrapper:focus,
+    .avatar-wrapper:hover{
+      background:rgba(0, 0, 0, 0.35);
+      color:#f6f6f6;
     }
 
   }
+}
+
+.user-dropdown{
+  margin-top:-2px;
+  border:2px solid $headBg;
+  border-radius:0;
+  min-width:200px;
+  margin-right:-70px;
+}
+.last-dropdown{
+  right:0;
+  left: inherit;
+  margin-right:0;
 }
 </style>
