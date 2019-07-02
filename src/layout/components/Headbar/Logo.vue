@@ -1,13 +1,13 @@
 <template>
   <div class="logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="siteLogo" :src="siteLogo" class="sidebar-logo">
-        <span class="sidebar-title">{{ siteTitle }} </span>
+      <router-link v-if="collapse" key="collapse" class="logo-link" to="/">
+        <img v-if="siteLogo" :src="siteLogo" class="logo-img">
+        <span class="logo-title">{{ siteTitle }} </span>
       </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="siteLogo" :src="siteLogo" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ siteTitle }} </h1>
+      <router-link v-else key="expand" class="logo-link" to="/">
+        <img v-if="siteLogo" :src="siteLogo" class="logo-img">
+        <h1 class="logo-title">{{ siteTitle }} </h1>
       </router-link>
     </transition>
   </div>
@@ -47,30 +47,30 @@ export default {
 .logo-container {
   overflow: hidden;
 
-  & .sidebar-logo-link {
+  & .logo-link {
     height: 100%;
     width: 100%;
 
-    & .sidebar-logo {
+    & .logo-img {
       width: 32px;
       height: 32px;
       vertical-align: middle;
       margin-right: 12px;
     }
 
-    & .sidebar-title {
+    & .logo-title {
       display: inline-block;
       margin: 0;
       color: #fff;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 20px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }
   }
 
   &.collapse {
-    .sidebar-logo {
+    .logo {
       margin-right: 0px;
     }
   }

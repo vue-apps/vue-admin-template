@@ -22,7 +22,7 @@
       <el-dropdown class="right-menu-item avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <i class="el-icon-coin" />
-          钱包
+          Wallet
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -38,7 +38,10 @@
 
       <div class="right-menu-item">
         <div class="avatar-wrapper">
-          <router-link to="/"><i class="el-icon-news" /></router-link>
+          <router-link to="/">
+            <i class="el-icon-news" />
+            News
+          </router-link>
         </div>
       </div>
     </div>
