@@ -15,9 +15,6 @@ export default {
     routes() {
       return this.$router.options.routes
     },
-    showLogo() {
-      return this.$store.state.settings.sidebarLogo
-    },
     isCollapse() {
       return true
     }
