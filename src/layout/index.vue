@@ -1,15 +1,14 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
-    <headbar class="headbar-container" />
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar class="sidebar-container" />
-    <div class="main-container">
-      <div :class="{'fixed-header':fixedHeader}">
+  <el-container :class="classObj" direction="vertical" style="height: 100%">
+    <headbar />
+    <el-container direction="horizontal">
+      <sidebar />
+      <el-container direction="vertical">
         <crumbar />
-      </div>
-      <app-main />
-    </div>
-  </div>
+        <app-main />
+      </el-container>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
@@ -51,46 +50,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  @import "~@/styles/mixin.scss";
-  @import "~@/styles/variables.scss";
-
-  .app-wrapper {
-    @include clearfix;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    &.mobile.openSidebar{
-      position: fixed;
-      top: 0;
-    }
-  }
-  .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
-  }
-
-  .fixed-header {
-    position: fixed;
-    top: $headbarHeight;
-    right: 0;
-    z-index: 9;
-    width: calc(100% - #{$sideBarWidth});
-    transition: width 0.28s;
-  }
-
-  .hideSidebar .fixed-header {
-    width: calc(100% - 54px)
-  }
-
-  .mobile .fixed-header {
-    width: 100%;
-    top: $headbarMobile;
-  }
-</style>

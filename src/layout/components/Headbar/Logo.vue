@@ -1,11 +1,7 @@
 <template>
-  <div class="logo-container" :class="{'collapse':collapse}">
+  <div class="logo-container">
     <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="logo-link" to="/">
-        <img v-if="siteLogo" :src="siteLogo" class="logo-img">
-        <span class="logo-title">{{ siteTitle }} </span>
-      </router-link>
-      <router-link v-else key="expand" class="logo-link" to="/">
+      <router-link class="logo-link" to="/">
         <img v-if="siteLogo" :src="siteLogo" class="logo-img">
         <h1 class="logo-title">{{ siteTitle }} </h1>
       </router-link>
@@ -14,15 +10,8 @@
 </template>
 
 <script>
-
 export default {
   name: 'HeadbarLogo',
-  props: {
-    collapse: {
-      type: Boolean,
-      required: true
-    }
-  },
   computed: {
     siteTitle() {
       return this.$store.state.settings.siteTitle
@@ -66,12 +55,6 @@ export default {
       font-size: 20px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
-    }
-  }
-
-  &.collapse {
-    .logo {
-      margin-right: 0px;
     }
   }
 }

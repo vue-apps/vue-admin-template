@@ -1,9 +1,9 @@
 <template>
-  <section class="app-main">
+  <el-main class="appMain-container">
     <transition name="fade-transform" mode="out-in">
       <router-view :key="key" />
     </transition>
-  </section>
+  </el-main>
 </template>
 
 <script>
@@ -16,25 +16,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.app-main {
-  /*50 = navbar  */
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  background: #F8F8F8;
-}
-.fixed-header+.app-main {
-  padding-top: 50px;
-}
-</style>
-
-<style lang="scss">
-// fix css style bug in open el-dialog
-.el-popup-parent--hidden {
-  .fixed-header {
-    padding-right: 15px;
-  }
-}
-</style>

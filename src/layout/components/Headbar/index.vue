@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <logo :collapse="isCollapse" />
+  <el-header class="headbar-container">
+    <logo />
     <navtip />
-  </div>
+  </el-header>
 </template>
 
 <script>
@@ -14,9 +14,6 @@ export default {
   computed: {
     routes() {
       return this.$router.options.routes
-    },
-    isCollapse() {
-      return true
     }
   }
 }
