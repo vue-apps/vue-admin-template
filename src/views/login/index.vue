@@ -1,89 +1,62 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
-      <div class="title-container">
-        <h3 class="title">Login Form</h3>
-      </div>
-
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
-
-    </el-form>
+    <el-row class="login-box" type="flex" justify="center">
+      <el-col :md="{span:10}" :lg="{span:8}" :xl="{span:7}">
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="off" label-position="left">
+          <h1 class="title">会员中心</h1>
+          <el-form-item prop="username">
+            <el-input v-model="loginForm.username" type="text" autocomplete="off" placeholder="会员ID">
+              <div slot="prepend" class="svg-container">
+                <i class="el-icon-user-solid" />
+              </div>
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="loginForm.password" autocomplete="off" placeholder="登录密码" :type="pwdType">
+              <div slot="prepend" class="svg-container">
+                <i class="el-icon-lock" />
+              </div>
+              <div slot="append" class="show-pwd" @click="showPwd">
+                <svg-icon :icon-class="pwdType === 'password' ? 'eye' : 'eye-open'" />
+              </div>
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="captcha" class="code-item">
+            <el-input v-model="loginForm.captcha" type="text">
+              <div slot="prepend" class="svg-container">
+                <i class="el-icon-paperclip" />
+              </div>
+              <div slot="append"><img :src="codeUrl+codeRand" class="code-img" @click="refreshCode"></div>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button :loading="btnLoading" type="primary" style="width:100%;" @click.native.prevent="handleLogin()">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
-
 <script>
-import { validUsername } from '@/utils/validate'
-
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: null,
+        password: null,
+        captcha: null
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur' }],
+        password: [{ required: true, trigger: 'blur' }],
+        captcha: [{ required: true, trigger: 'blur' }]
       },
-      loading: false,
-      passwordType: 'password',
-      redirect: undefined
+      btnLoading: false,
+      pwdType: 'password',
+      redirect: undefined,
+      codeUrl: '/captcha.jpg?', // codeUrl: process.env.VUE_APP_BASE_API,
+      codeRand: null
     }
   },
   watch: {
@@ -96,142 +69,92 @@ export default {
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.pwdType === 'password') {
+        this.pwdType = 'text'
       } else {
-        this.passwordType = 'password'
+        this.pwdType = 'password'
       }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
+          this.btnLoading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.btnLoading = false
             this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
           }).catch(() => {
-            this.loading = false
+            this.btnLoading = false
+            this.loginForm.captcha = null
+            this.refreshCode()
           })
         } else {
           console.log('error submit!!')
           return false
         }
       })
+    },
+    refreshCode() {
+      this.codeRand = Math.random()
     }
   }
 }
 </script>
-
-<style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
-$bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
-
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
+<style rel="stylesheet/scss" lang="scss" scoped>
+.login-container .el-input i{
+  font-size:16px;
 }
-
-/* reset element-ui css */
 .login-container {
-  .el-input {
-    display: inline-block;
-    height: 47px;
-    width: 85%;
-
-    input {
-      background: transparent;
-      border: 0px;
-      -webkit-appearance: none;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 47px;
-      caret-color: $cursor;
-
-      &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
-      }
-    }
-  }
-
-  .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
-  }
-}
-</style>
-
-<style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
-
-.login-container {
-  min-height: 100%;
+  position: fixed;
+  height: 100%;
   width: 100%;
-  background-color: $bg;
-  overflow: hidden;
-
-  .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
+  background: url('/login-bg.jpg') left top no-repeat;
+  background-size: cover;
+  .login-box {
+    padding: 0 20px;
   }
-
+  .login-form {
+    padding: 35px 35px 15px 35px;
+    margin: 120px auto;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    -moz-box-shadow: 5px 5px 15px #000;
+    -webkit-box-shadow: 5px 5px 15px #000;
+    box-shadow: 5px 5px 15px #000;
+  }
   .tips {
     font-size: 14px;
     color: #fff;
     margin-bottom: 10px;
-
     span {
       &:first-of-type {
         margin-right: 16px;
       }
     }
   }
-
+  .title {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 0px auto 40px auto;
+    text-align: center;
+    font-weight: bold;
+  }
   .svg-container {
-    padding: 6px 5px 6px 15px;
-    color: $dark_gray;
+    padding: 6px;
+    color: #889aa4;
+    text-align: center;
     vertical-align: middle;
-    width: 30px;
     display: inline-block;
   }
-
-  .title-container {
-    position: relative;
-
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-  }
-
   .show-pwd {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    font-size: 16px;
-    color: $dark_gray;
+    padding: 6px;
+    color: #889aa4;
     cursor: pointer;
     user-select: none;
+    font-size:16px;
+  }
+  .code-img {
+    display: block;
+    cursor: pointer;
   }
 }
 </style>

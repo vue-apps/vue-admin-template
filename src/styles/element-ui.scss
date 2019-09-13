@@ -15,6 +15,11 @@
   display: none;
 }
 
+.el-input-group__append, 
+.el-input-group__prepend {
+  padding: 0 10px;
+}
+
 
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
