@@ -4,28 +4,28 @@ import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
-  name: '',
-  avatar: ''
+  options: [],
+  userdata: {}
 }
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_OPTIONS: (state, options) => {
+    state.options = options
   },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  SET_USERDATA: (state, userdata) => {
+    state.userdata = userdata
   }
 }
 
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { username, password, captcha } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      login({ username: username.trim(), password: password, captcha: captcha.trim() }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
@@ -45,11 +45,14 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        // 验证返回的options是否是一个非空对象
+        if (data.options && typeof data.options === 'object') {
+          commit('SET_OPTIONS', data.options)
+        } else {
+          // 格式: {system: true, sys_option/index: true, sys_role/index: true, sys_user/index: true}
+          reject('GetInfo: options must be a non-null object !')
+        }
+        commit('SET_USERDATA', data.userdata)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -62,6 +65,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
+        commit('SET_OPTIONS', [])
+        commit('SET_USERDATA', {})
         removeToken()
         resetRouter()
         resolve()

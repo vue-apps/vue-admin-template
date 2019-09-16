@@ -133,8 +133,7 @@ export default {
   }
   .title {
     font-size: 26px;
-    font-weight: 400;
-    margin: 0px auto 40px auto;
+    margin: 0px auto 30px auto;
     text-align: center;
     font-weight: bold;
   }

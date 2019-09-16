@@ -173,13 +173,18 @@
   .appMain-container {
     background: #f8f8f8;
   }
+  .body-container{
+    margin: 10px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 2px #ccc;
+  }
 
 
   // mobile responsive
   .mobile {
     .headbar-container{
       height: $headbarMobile !important;
-
       .logo-container{
         height: 60px;
         width: 100%;
@@ -188,7 +193,6 @@
         border-bottom: 1px solid #fff;
         text-align: center;
       }
-
       .navtip-container{
         height: 40px;
         width: 100%;
@@ -197,6 +201,9 @@
       }
     }
 
+    .body-container{
+      margin: 0;
+    }
   }
 
   .withoutAnimation {

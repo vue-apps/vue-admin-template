@@ -6,14 +6,16 @@
       <el-dropdown class="right-menu-item avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <i class="el-icon-user-solid" />
-          <span v-if="device!=='mobile'">{{ username }}<i class="el-icon-caret-bottom" /></span>
+          <span v-if="device!=='mobile'">{{ userdata.name }}<i class="el-icon-caret-bottom" /></span>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown last-dropdown">
           <el-dropdown-item>
-            <router-link to="/">Home</router-link>
+            <div>ID: {{ userdata.id }}</div>
+            <div>邮箱: {{ userdata.email }}</div>
+            <div>等级: {{ userdata.lvname }}</div>
           </el-dropdown-item>
           <el-dropdown-item divided>
-            <div @click="logout">Log Out</div>
+            <div @click="logout">登出</div>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -21,24 +23,27 @@
       <el-dropdown class="right-menu-item avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <i class="el-icon-coin" />
-          <span v-if="device!=='mobile'">Wallet<i class="el-icon-caret-bottom" /></span>
+          <span v-if="device!=='mobile'">我的资产<i class="el-icon-caret-bottom" /></span>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <el-dropdown-item>
-            <router-link to="/">Home</router-link>
+            <strong>比特币BTC</strong>
+            <div>可用: {{ userdata.member_bzdval }}</div>
+            <div>冻结: {{ userdata.member_freeze }}</div>
           </el-dropdown-item>
-          <el-dropdown-item divided>Home</el-dropdown-item>
           <el-dropdown-item divided>
-            <div @click="logout">Log Out</div>
+            <strong>以太坊ETH</strong>
+            <div>可用: {{ userdata.member_lsbval }}</div>
+            <div>冻结: {{ userdata.member_lsbfre }}</div>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
 
       <div class="right-menu-item">
         <div class="avatar-wrapper">
-          <router-link to="/">
+          <router-link to="/about/notice">
             <i class="el-icon-news" />
-            <span v-if="device!=='mobile'">News</span>
+            <span v-if="device!=='mobile'">公告</span>
           </router-link>
         </div>
       </div>
@@ -52,8 +57,8 @@ import Hamburger from '@/components/Hamburger'
 export default {
   components: { Hamburger },
   computed: {
-    username() {
-      return this.$store.getters.name
+    userdata() {
+      return this.$store.getters.userdata
     },
     device() {
       return this.$store.state.app.device
@@ -110,6 +115,7 @@ export default {
     .avatar-wrapper{
       padding-left:15px;
       padding-right:15px;
+      cursor: pointer;
     }
     .avatar-wrapper:focus,
     .avatar-wrapper:hover{
@@ -121,11 +127,19 @@ export default {
 }
 
 .user-dropdown{
-  margin-top:-2px;
-  border:2px solid $headBg;
+  margin-top:0;
+  border-left:2px solid $headBg;
+  border-right:2px solid $headBg;
+  border-bottom:2px solid $headBg;
   border-radius:0;
   min-width:200px;
+  .el-dropdown-menu__item:focus, 
+  .el-dropdown-menu__item:not(.is-disabled):hover{
+    background-color:inherit !important; 
+  }
 }
+
+
 .last-dropdown{
   right:0;
   left: inherit;

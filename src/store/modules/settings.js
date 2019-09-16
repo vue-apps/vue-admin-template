@@ -1,13 +1,11 @@
 import defaultSettings from '@/settings'
 
-const { siteName, siteTitle, siteLogo, showSettings, fixedHeader } = defaultSettings
+const { siteName, siteTitle, siteLogo } = defaultSettings
 
 const state = {
   siteName: siteName,
   siteTitle: siteTitle,
-  siteLogo: siteLogo,
-  showSettings: showSettings,
-  fixedHeader: fixedHeader
+  siteLogo: siteLogo
 }
 
 const mutations = {
