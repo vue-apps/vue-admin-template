@@ -108,6 +108,7 @@ export default {
     .right-menu-item {
       float: right;
       height: 100%;
+      font-size: 14px;
       vertical-align: text-bottom;
       border-left:1px solid rgba(255, 255, 255, .15);
     }
