@@ -55,7 +55,7 @@ export default {
       btnLoading: false,
       pwdType: 'password',
       redirect: undefined,
-      codeUrl: '/captcha.jpg?', // codeUrl: process.env.VUE_APP_BASE_API,
+      codeUrl: './captcha.jpg?', // codeUrl: process.env.VUE_APP_BASE_API,
       codeRand: null
     }
   },
