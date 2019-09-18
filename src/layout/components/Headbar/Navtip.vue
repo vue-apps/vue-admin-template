@@ -134,12 +134,11 @@ export default {
   border-bottom:2px solid $headBg;
   border-radius:0;
   min-width:200px;
-  .el-dropdown-menu__item:focus, 
+  .el-dropdown-menu__item:focus,
   .el-dropdown-menu__item:not(.is-disabled):hover{
-    background-color:inherit !important; 
+    background-color:inherit !important;
   }
 }
-
 
 .last-dropdown{
   right:0;
